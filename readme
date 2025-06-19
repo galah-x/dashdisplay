@@ -1,0 +1,37 @@
+Readme for Dashdisplay.
+John Sheahan June 2025
+
+This thing is a dashboard display for an Electric Haflinger I'm building. I want to be able to monitor battery voltage, current and StateOfCharge. I also wanted to see the range of individual cell voltages and cell temperatures.
+
+All of this information is available to the BMS, and the Batrium BMS I have thoughtfully broadcasts the relevant information using UDP on its internal wireleass AP. Batrium is even civilized enough to document and publish the detail on their wiki.
+
+So its pretty easy to build a display with an ESP32 and some Sharp sunlight readable sort-of-LCDs from Adafruit to display the desired information on the dashboard with no wiring except 12V power.
+
+The code needs an Arduino setup with ESP32 support loaded.   Its the .h and .ino files. And a few standard add-in libraries the compiler will flag.
+
+Programming the ESP32 board is done with a usb-C cable from the arduino UI.
+
+Use the arduino serial monitor to program your WiFI AP SSID and password. Serial runs at 115200 baud.  I discovered the Batrium SSID with my phone searching for WiFi. The Batrium password is pin123456, replace 123456 with the pinnumber written on the back of the WatchMon.
+
+I wrote a test script test_app/udp_tester.pl you can use to test the dispay if you build one, without actually needing a Batrium setup and/or being close to it.
+
+The dashdisplay has the following hardware components:
+  * a 3d printed front frame to hold the 2 LCDs and a wiring board for them.
+  * a clear acrylic front plate
+  * 2 adafruit sharp lcd displays. 400x240 pixels. Add a 6 pin machine screw pin header to each.
+  * a wiring board. I used a scrap of FR4 protoboard with 2 6 pin machine screw socket strips and a 6 pin socket strip on the back. The 2 displays Vin, gnd, spi_clk, spi_mosi are in paralell. The 2 CS pins are brought out separately.
+  * the round spigot on the back of the front frame goes through a hole in the dash
+
+Then the is some electronics:
+  * a 'motherboard' with socket strip pins to hold an ESP32 module.
+  * motherboard has 6 pins of 0.1 inch pinstrip at the front
+  * motherboard has a small 12V to 5V switching module on it also, aliexpress
+  * motherboard has 10 wires on the back
+  * esp32 wroom 32 module from aliexpress.
+  * optional flexible right angle USBC cable to alow reprogramming. Mine came from Aliexpress.
+
+Then there is a 3d printed back assembly. It goes over the spigot on the front assembly . The electronics goes inside. There is a spot for a XT60 flanged connector for 12V. And a hole to let the USBC cable out. Probably should silicone up the cable hole once the cable is fitted.
+
+Both 3D printed part needs supports. Cleaning out the support was tedious. They should probably be designed the other way up (a change to the front spigot would be needed).  Feel free to do that better. Freecad design (I used version 1.0.1) stl files and gcode are in the repo. 
+
+There should soon be schematics of the mother and display wiring boards.
