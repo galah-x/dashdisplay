@@ -1,5 +1,5 @@
 //    -*- Mode: c++     -*-
-// my $ver =  'display  Time-stamp: "2025-06-19 10:14:41 john"';
+// my $ver =  'display  Time-stamp: "2025-06-20 16:41:08 john"';
 
 /* All code in this directory written by me and is BSD licensed.
    John Sheahan June 2025
@@ -94,14 +94,17 @@ void loop(void)
 	  display1.clearDisplay();
 	  display1.setTextSize(6);
 	  display1.setTextColor(BLACK);
+	  // pack voltage
 	  display1.setCursor(d1_xy.pack_v_x, d1_xy.pack_v_y);
 	  sprintf(outbuf, "%3d.%02dV", dd_data.pack_v/100, dd_data.pack_v % 100);
 	  display1.print(outbuf);
-	  
+
+	  // pack I
 	  display1.setCursor(d1_xy.pack_i_x, d1_xy.pack_i_y);
-	  sprintf(outbuf, "%4.1fA", dd_data.pack_i);
+	  sprintf(outbuf, "%4.3fA", dd_data.pack_i/1000.0f);
 	  display1.print(outbuf);
-	  
+
+	  // SOC
 	  display1.setCursor(d1_xy.pack_soc_x, d1_xy.pack_soc_y);
 	  sprintf(outbuf, "%3d.%1d%%", (dd_data.pack_soc -10)/2, 5*(dd_data.pack_soc % 2));
 	  display1.print(outbuf);
@@ -119,7 +122,7 @@ void loop(void)
 	  display2.print(outbuf);
 	  
 	  display2.setCursor(d2_xy.cell_max_v_x, d2_xy.cell_max_v_y);
-	  sprintf(outbuf, "max=%1d.%01d", dd_data.cell_max_v/1000, dd_data.cell_max_v % 1000);
+	  sprintf(outbuf, "max=%1d.%03d", dd_data.cell_max_v/1000, dd_data.cell_max_v % 1000);
 	  display2.print(outbuf);
 	  
 	  display2.setCursor(d2_xy.cell_min_t_x, d2_xy.cell_min_t_y);

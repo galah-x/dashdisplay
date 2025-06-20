@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #    -*- Mode: cperl     -*-
 # emacs automagically updates the timestamp field on save
-# my $ver =  'udp server to test dashdisplay  Time-stamp: "2025-06-19 09:38:36 john"';
+# my $ver =  'udp server to test dashdisplay  Time-stamp: "2025-06-20 16:08:25 john"';
 
 # use as udp_tester.pl --ip <display_ip_adddr>
 
@@ -41,7 +41,8 @@ my @pack_v = (50.0, 51.11, 52.23, 53.34, 54.45, 55.56, 56.67, 57.7, 58.08, 59.9,
 
 my @min_cell_t = (-10, 0, 1, 2, 10, 20, 30, 40, 50, 100);
 my @max_cell_t = (-5, 1, 2, 10, 20, 30, 40, 50, 60, 120);
-my @pack_i = (1, 10, 40, 70, 100, 150, 0.0, 1.1, 2.222);
+#my @pack_i = (1, 10, 40, 70, 100, 150, 0.0, 1.1, 2.222);
+my @pack_i = (0x0e26e3c0, 0x0efec3c0, 0x0fd6a4c0, 0x1050a5c0);
 my @soc = (1, 10,5, 50.5, 99);
 
 
@@ -122,8 +123,8 @@ sub next_pack_i
     my $values = @pack_i;
     my $this_index = $msgnum % $values;
     my $this = $pack_i[$this_index];
-    printf "pack_i = $this\n";
-    return $this;
+    printf "pack_i = %8x\n", $this;   # the last term is the first off the call stack.
+    return ($this>>24) & 0xff, ($this>>16) & 0xff, ($this>>8) & 0xff, $this & 0xff   ; 
 }
 sub next_soc
 {
@@ -169,7 +170,7 @@ sub next_msg {
     my $type = shift;
     my $msg;
     if ($type == 0x5732) {#    t op        T  S
-	$msg = pack("Avx5A8A2A2A4A2AAAAAvvA2CAAACvfAA",
+	$msg = pack("Avx5A8A2A2A4A2AAAAAvvA2CAAACvCCCCAA",
 		    ':',    # 0 header
 		    0x5732, # 1 msg type
 		          # 3 get to offset 8

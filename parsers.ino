@@ -1,6 +1,6 @@
 //    -*- Mode: c++     -*-
 // emacs automagically updates the timestamp field on save
-// my $ver =  'parsers for display  Time-stamp: "2025-06-19 10:14:24 john"';
+// my $ver =  'parsers for display  Time-stamp: "2025-06-20 16:40:14 john"';
 
 // this is the parsers for app to run the display parser for the haflinger
 // use tools -> board ->  ESP32 Dev module 
@@ -150,7 +150,7 @@ void parse_udp (void)
 void parse_udp_5732 (void)
 {
   dd_data.pack_v     = fetch_le_uint16(dd_offset_5732.pack_v);
-  dd_data.pack_i     = fetch_le_float(dd_offset_5732.pack_v);
+  dd_data.pack_i     = fetch_le_float(dd_offset_5732.pack_i);
   dd_data.pack_soc   = ( uint8_t )  udp_buffer[dd_offset_5732.pack_soc];
   dd_data.cell_min_v = fetch_le_uint16(dd_offset_5732.cell_min_v);
   dd_data.cell_max_v = fetch_le_uint16(dd_offset_5732.cell_max_v);
@@ -185,10 +185,11 @@ uint16_t fetch_le_uint16 (uint8_t offset)
 // fetch littleendian 4 byte float from a batrium sourced buffer carried over udp
 float fetch_le_float (uint8_t offset)
 {
-  float val;
-  // batrium uses little endian buffer data arrangement 
-  val = (udp_buffer[offset + 3] << 24) + (udp_buffer[offset + 2] << 16)+ (udp_buffer[offset + 1] << 8) + udp_buffer[offset] ; 
-  return val;
+  // batrium uses little endian buffer data arrangement. as does esp32
+  // return copyfloat;
+  //  Serial.printf("saw %2x %2x %2x %2x for I float\n", udp_buffer[44],  udp_buffer[45],  udp_buffer[46],  udp_buffer[47]);
+  memcpy(&copyfloat,  &udp_buffer[offset], 4);
+  return copyfloat;
 }
 
 

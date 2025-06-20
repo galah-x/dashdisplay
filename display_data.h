@@ -1,6 +1,6 @@
 //    -*- Mode: c++     -*-
 // emacs automagically updates the timestamp field on save
-// my $ver =  'data and variables for display  Time-stamp: "2025-06-19 10:18:26 john"';
+// my $ver =  'data and variables for display  Time-stamp: "2025-06-20 16:40:38 john"';
 
 
 #include <Preferences.h>  // the NV memory interface
@@ -37,7 +37,7 @@ const uint8_t record_size = longest_record + 2;    //  char char = nnnnn \n
 char serial_buf[record_size];
 uint8_t serial_buf_pointer;
 
-const char * version = "DISPLAY 19 Jun 2025 Rev1";
+const char * version = "DISPLAY 20 Jun 2025 Rev11";
 
 Preferences dispPrefs;  // NVM structure
 // these will be initialized from the NV memory
@@ -63,6 +63,7 @@ const uint16_t batrium_port = 18542 ; // from Batrium doc
 char udp_buffer[255];
 WiFiUDP udp;
 
+uint8_t testpb[4];
 bool new_data = 1;
 
 struct dd_data_str
@@ -132,3 +133,4 @@ struct d2_xy_str
 struct d2_xy_str d2_xy = {0,0,  0,60,   0,120,  0,180};
 
   
+float copyfloat;
