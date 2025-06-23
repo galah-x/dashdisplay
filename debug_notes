@@ -1,0 +1,87 @@
+JRS 20 Jun 2025
+
+Set up the dashdisplay in the shed with a windows PC monitoring the batrium via usb, and the
+toughbook running wireshark.
+
+
+The windows PC running batrium tools showed
+shunt V 64.22 to 64.25
+Shunt I about -0.005A , from -4ma to -7mA. 
+Vmin = 3.98
+Vmax = 4.02
+Tmin=5
+Tmax=7
+SOC = 100%   now, I set it to 70 so this is odd. Perhaps some calibrating going on??
+
+The dashdisplay showed
+shunt V 64.22 
+Shunt I either -0 or some stupid big number, some of which crashed the display
+Vmin = 3.980
+Vmax = 4.20
+Tmin=5
+Tmax=7
+SOC = 100%
+
+Haflinger display I is just wrong, 
+and max_cell_v is 4.20 not 4.020.
+rest looks sane for now.
+
+Now there seems to be a fractional digit missing on vmax, inspect the code there. Yep, obvious bug. Fixed.
+
+The float is likely harder. Just checked all the message types, ShuntCurrent appears in 5 message types but always as floatle.
+
+Lets have a look at the wireshark dump.. I captured 204 packets in 288 seconds.
+
+john@magpie:/fs/john/projects/arduino/haflinger/dashdisplay/debug$ ./pack_summary packets.txt |sort | uniq -c
+     29 3031      len=30
+     28 3033      len=70
+     28 3233      len=   documented in payload/js as LiveDisplay.js  
+    115 5732      len=50 documented in pdf as System Discovery Info and in payload/js
+      4 6831      len=   documented in pdf as Telemetry - Quick Session History and in paload/js
+
+now shuntcurrent is at offset 44 decimal, which is 0020 + 0c hex.
+
+./pack_summary_type_currentvals packets.txt|sort | uniq -c
+gives me 77 different encodings. 
+      
+Checking IEEE representation..
+bit 31 is sign. 1 == negative
+bits [30 - 23] is exponent
+bits [22 .. 0 ] is fraction.
+
+there is a leading 1 ahead of the decimal point.
+
+Suppose that we want to convert 9 97/128 into a IEEE 32 bit format. The process is:
+
+1. Convert to base 2.
+1001.1100001
+
+2 . Shift number to the form of 1.FFFFFF × 2E:
+1.0011100001 x 2^3
+
+3. Add 127 (excess 127 code) to exponent field and convert to binary:
+3 + 127 = 130 = 10000010
+
+4. Determine the sign bit. If a negative number, set to 1. Otherwise set to 0.
+
+5. Now put the numbers together, using only the fractional part of the number represented by step 2 above (remove the 1. preceding the fractional part):
+
+0 100000010 001110000100000000000
+or in hex
+411c2000
+
+I saw -0.005 A
+
+and I now think Batrium moves current in mA.
+so thats -5
+sign = 1
+101
+or 1.01 * 2^2
+so exponent is 2 + 127 = 129 = 10000001
+
+sign + exponent = C08
+which is consistent with what I captured...
+
+converting what I captured to bigendian and sorting, I see
+c0915b27 .. c0e50e12
+which is c08 and 00115b27  to 11050e12
