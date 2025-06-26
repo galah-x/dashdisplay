@@ -45,5 +45,26 @@ screw in the xp60
 screw in the back
 plug in and screw in the 2 displays from the front.
 
+Thats all a bit messy.
+
+Changes I should make:
+
+Front
+  * displays should be held in with screws or nutserts, not thermal posts. Also the exact placement of the posts is wrong by a few tenths of a mm.  the posts dont have a hole with walls nder for either nutserts or self tappers.
+  * the slot for the female pin strip is too narrow. Display to motherboard connector.  Needs filing currently.
+
+Spigot
+  * cheeks for the 4mm nutserts are a bit small. Reduce to 3mm?
+
+Back
+  * prints backwards. want to do flat back on the printer bed. Far too much cleanup curently. Maybe a taper to the shoulder.
+  * Assembly is difficult. I'd prefer to be able to assemble without removing the XP60. Have to bend the flex USB cable too.
+    * Could I add an extra small connector in the 12V so the XP60 plugs in?
+      * as I need to plug the MB into display board, then feed wires into the holes in the back, while sliding back over spigot, would be a long wire to locate somewhere.  Right now I use a single feeder wire soldered to both red and black ends to pull through, prior to unsoldering feeder then soldering on XP60. 
+    * Could I do a slot so the wires fit between spigot and back?
+    * XP60 on the back of the front part? (not nice).
+    * perhaps the 12V to 5V switcher should be on a bulge on the side of the back, so that USB is the only cable?
+    * or even usb to a separate blob nearly, with 12V on one side and usbC on the other. Unplug the USB for programming. Keep it flat to the display so as to not shroud the wifi antenna of the wsp32 module. 
+  * Hopefully doesn't have to come apart often.  
 
 
