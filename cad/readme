@@ -24,9 +24,26 @@ This is a redraw of dd_3.FCStd to add 0.5mm all around the display, and an extra
 display and wiring board.  Its designed to print with the rear (surface on dash) on the bed. No supports needed.
 No spigot, just a groove to locate the spigot while its epoxied in. 
 I also changed to heat formed stakes to hold down the display, which was a mistake. They missed position by a
-few tenths of a mm,  and were too fragile to shave down. I just broke them off and will fit either self tappers or maybe a bit of filament to hold the displays in. Self tappers are on order.
+few tenths of a mm,  and were too fragile to shave down. I just broke them off and will fit either self tappers or maybe a bit of filament to hold the displays in. Self tappers are on order. I pushed in some 2.5mm heat set threaded inserts. As I didn't have holes with walls, was a little ordinary, but worked.
+Note I had to ease the slot for the connector in the front.
 
 dd_spigot.FCStd
 The same spigot design used in the first one, without the front, and a pointy end to match the groove in dd_front_nospigot.FCStd
+
+Note assembly is a bit tricky. See the pictures.
+Glue in the spigot.
+Ease the slot for the 0.1 inch pinstrip in the front piece with a file.
+Fit the display wiring board.
+Fit flexible right angle USB cable to the ESP32. This will allow reprogramming later without disassembly.
+fit 12v wires. Leave then long.
+Fit motherboard into the connecter for the display board.
+Mount front board through dash
+feed the USB and 12V leads through the back printed part.
+push the back cover on, bringing the leads out.
+Solder the 2 12V wires to the XP60 connector, as short as practical.
+screw in the xp60
+screw in the back
+plug in and screw in the 2 displays from the front.
+
 
 

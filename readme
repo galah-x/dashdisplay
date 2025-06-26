@@ -34,4 +34,7 @@ Then there is a 3d printed back assembly. It goes over the spigot on the front a
 
 Both 3D printed part needs supports. Cleaning out the support was tedious. They should probably be designed the other way up (a change to the front spigot would be needed).  Feel free to do that better. Freecad design (I used version 1.0.1) stl files and gcode are in the repo. 
 
-There should soon be schematics of the mother and display wiring boards.
+There are schematics of the mother and display wiring boards  in teh schematics directory.
+There are a few pictures of the bits and the assembly, with the display working against the batrium  WatchMon , in the
+pics directory.
+
